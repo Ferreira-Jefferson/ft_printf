@@ -13,7 +13,7 @@ FLAGS = -Wall -Werror -Wextra -g -I libft/
 all: $(NAME)
 
 $(NAME): $(MANDATORY_OBJ)
-	make -C ./libft
+	make bonus -C ./libft
 	ar -rcsT $(NAME) $(LIBFT)
 
 %.o: %.c

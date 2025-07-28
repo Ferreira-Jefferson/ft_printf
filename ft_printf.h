@@ -3,6 +3,6 @@
 
 # include "./libft/libft.h"
 
-int ft_validate(char *format, char **split_format);
+char	**ft_validate(char *format);
 
 #endif
