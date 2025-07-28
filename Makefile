@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 
-MANDATORY_SRC = ft_putchar.c
+MANDATORY_SRC = ft_printf.c
 
 MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
 
