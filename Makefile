@@ -1,44 +1,64 @@
 NAME = libftprintf.a
+OBJ_DIR = objs
+
+SRC_DIR = ./
+UTILS_DIR = utils
 
 MANDATORY_SRC = ft_printf.c
-UTEIS = $(addprefix utils/, ft_print_char.c ft_print_hex_lower.c \
-							ft_print_hex_upper.c ft_print_int.c \
-							ft_print_percent.c ft_print_pointer.c \
-							ft_print_string.c ft_print_unsigned.c)
 
-MANDATORY_SRC += $(UTEIS)
+BONUS_SRC = ft_printf_bonus.c
 
-MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
+UTILS_SRC = ft_print_char.c ft_print_hex_lower.c \
+			ft_print_hex_upper.c ft_print_int.c \
+			ft_print_percent.c ft_print_pointer.c \
+			ft_print_string.c ft_print_unsigned.c
+
+MANDATORY_SRC := $(addprefix $(SRC_DIR)/, $(MANDATORY_SRC))
+UTILS_SRC := $(addprefix $(UTILS_DIR)/, $(UTILS_SRC))
+BONUS_SRC := $(addprefix $(SRC_DIR)/, $(BONUS_SRC))
+
+MANDATORY_OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(MANDATORY_SRC:.c=.o)))
+UTILS_OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(UTILS_SRC:.c=.o)))
+BONUS_OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(BONUS_SRC:.c=.o)))
+
+OBJS = $(MANDATORY_OBJ) $(UTILS_OBJ) $(BONUS_OBJ)
 
 LIBFT = ./libft/libft.a
 
 CC = cc
-
-FLAGS = -Wall -Werror -Wextra -g -I libft/
+CFLAGS = -Wall -Werror -Wextra -g -Ilibft/
 
 all: $(NAME)
 
-$(NAME): $(MANDATORY_OBJ)
-	make bonus -C ./libft
-	ar -rcsT $(NAME) $(LIBFT)
+$(NAME): $(OBJS)
+	make -C ./libft
+	cp libft/libft.a temp_lib.a
+	cd objs && ar x ../temp_lib.a
+	ar -rcs $(NAME) $(OBJS) objs/*.o
+	rm -f temp_lib.a
 
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
-	ar -rcsT $(NAME) $@
+bonus: $(NAME)
 
-bonus:
-	@$(MAKE) MANDATORY_SRC="$(MANDATORY_SRC) $(BONUS_SRC)"
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(UTILS_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(MANDATORY_OBJ) $(BONUS_OBJ)
+	rm -f $(OBJ_DIR)/*.o
+	@make -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
+	@make -C libft fclean
 
 re: fclean all
 
-test: re
+test: $(NAME)
 	cc main.c -L. -lftprintf
 	./a.out
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus test

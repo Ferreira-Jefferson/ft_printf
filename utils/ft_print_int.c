@@ -6,7 +6,7 @@
 /*   By: jtertuli <jtertuli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:36:25 by jtertuli          #+#    #+#             */
-/*   Updated: 2025/07/29 17:54:50 by jtertuli         ###   ########.fr       */
+/*   Updated: 2025/07/30 06:48:25 by jtertuli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	ft_print_int(va_list args)
 {
-	int	number;
+	char	*number;
+	int		len;
 
-	number = va_arg(args, int);
-	ft_putnbr_fd(number, 1);
-	return (ft_count_decimal_places(number));
+	number = ft_itoa(va_arg(args, int));
+	ft_putstr_fd(number, 1);
+	len = ft_strlen(number);
+	ft_to_free((void **)&number);
+	return (len);
 }

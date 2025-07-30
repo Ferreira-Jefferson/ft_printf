@@ -9,8 +9,8 @@ int main()
     int ret_orig;
 
 
-    ret_ft = ft_printf("Endereco NULL: %p\n", (void *)NULL); // Ponteiro NULL
-    ret_orig = printf("Endereco NULL: %p\n", (void *)NULL);
+    ret_ft = ft_printf("F %x ", 9223372036854775807LL);
+	ret_orig = printf("P %x ", 9223372036854775807LL);
     printf("ft_printf retorno: %d, printf retorno: %d\n\n", ret_ft, ret_orig);
 
 	return (0);
