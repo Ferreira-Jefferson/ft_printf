@@ -53,7 +53,7 @@ All format specifiers are implemented according to the 42 subject requirements a
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Ferreira-Jefferson/ft_printf
    cd ft_printf
    ```
 
