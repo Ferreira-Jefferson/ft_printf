@@ -6,7 +6,7 @@
 /*   By: jtertuli <jtertuli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:42:43 by jtertuli          #+#    #+#             */
-/*   Updated: 2025/08/01 11:52:48 by jtertuli         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:21:08 by jtertuli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_printf(const char *format, ...)
 
 	va_start(args, format);
 	size = ft_print_final_str(format, args);
+	va_end(args);
 	return (size);
 }
 
@@ -56,11 +57,9 @@ static t_type_func	ft_get_function_to_closing_char(char c)
 
 static int	ft_print_final_str(const char *original, va_list	args)
 {
-	int			i;
 	int			len;
 	t_type_func	function;
 
-	i = 0;
 	len = 0;
 	while (*original)
 	{
